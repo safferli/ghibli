@@ -15,7 +15,7 @@ setwd(wd)
 
 
 ## API call wrapped in a function
-f.call.ghibli.api <- function(endpoint, id = NULL, ...){
+f.call.ghibli.api <- function(endpoint, ...){
   
   # API address
   ghibli.api.base <- "https://ghibliapi.herokuapp.com/"
@@ -23,7 +23,7 @@ f.call.ghibli.api <- function(endpoint, id = NULL, ...){
   # set up the API query
   ghibli.api <- httr::modify_url(
     # pagination goes via query = "page=0" in ... 
-    ghibli.api.base, path = list(endpoint, id), ...
+    ghibli.api.base, path = endpoint, ...
   )
   
   # call API
@@ -32,9 +32,22 @@ f.call.ghibli.api <- function(endpoint, id = NULL, ...){
   return(r)
 }
 
+# testing with Totoro
+f.call.ghibli.api(endpoint = list("films", "58611129-2dbc-4a81-a72f-77ddfc1b1b49"))
 
-f.call.ghibli.api("films", id = "58611129-2dbc-4a81-a72f-77ddfc1b1b49")
 
+
+
+
+
+
+
+### testing
+
+httr::GET(
+  httr::modify_url(ghibli.api.base, path = list("films", NA))
+)
+f.call.ghibli.api("films", id = NULL)
 
 
 
