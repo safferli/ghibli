@@ -5,9 +5,7 @@ options(scipen = 999)
 
 library(httr)
 library(jsonlite)
-library(dplyr)
-#library(tidyr)
-library(ggplot2)
+library(tidyverse)
 
 # Define your workspace: "X:/xxx/"
 wd <- "c:/github/ghibli/"
@@ -17,7 +15,7 @@ setwd(wd)
 
 
 ## API call wrapped in a function
-f.call.ghibli.api <- function(endpoint, ...){
+f.call.ghibli.api <- function(endpoint, id = NULL, ...){
   
   # API address
   ghibli.api.base <- "https://ghibliapi.herokuapp.com/"
@@ -25,7 +23,7 @@ f.call.ghibli.api <- function(endpoint, ...){
   # set up the API query
   ghibli.api <- httr::modify_url(
     # pagination goes via query = "page=0" in ... 
-    ghibli.api.base, path = endpoint, ...
+    ghibli.api.base, path = list(endpoint, id), ...
   )
   
   # call API
@@ -33,6 +31,9 @@ f.call.ghibli.api <- function(endpoint, ...){
   # return API call
   return(r)
 }
+
+
+f.call.ghibli.api("films", id = "58611129-2dbc-4a81-a72f-77ddfc1b1b49")
 
 
 
