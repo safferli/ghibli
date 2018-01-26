@@ -47,8 +47,10 @@ f.call.ghibli.api(endpoint = list("films", "58611129-2dbc-4a81-a72f-77ddfc1b1b49
 httr::GET(
   httr::modify_url(ghibli.api.base, path = list("films", NA))
 )
-f.call.ghibli.api("films", id = NULL)
 
+films.r <- f.call.ghibli.api("films")
+
+films <- fromJSON(content(films.r, "text"), flatten = F)
 
 
 
